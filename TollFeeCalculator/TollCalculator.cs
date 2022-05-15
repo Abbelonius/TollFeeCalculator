@@ -59,22 +59,22 @@ namespace TollFeeCalculator
             int hour = date.Hour;
             int minute = date.Minute;
 
-            if (hour == 6 && minute <= 29) return 9;
-            else if (hour == 6) return 16;
+            if (hour == 6 && minute <= 29) return 9; //06:00–06:29
+            else if (hour == 6) return 16; //06:30–06:59	
 
-            else if (hour == 7) return 22;
+            else if (hour == 7) return 22; //07:00–07:59	
 
-            else if (hour == 8 && minute <= 29) return 16;
-            else if (hour >= 8 && hour <= 14) return 9;
+            else if (hour == 8 && minute <= 29) return 16; //08:00–08:29	
+            else if (hour >= 8 && hour <= 14) return 9; //08:30–14:59	
 
-            else if (hour == 15 && minute <= 29) return 16;
-            else if (hour == 15 || hour == 16) return 22;
+            else if (hour == 15 && minute <= 29) return 16; //15:00–15:29	
+            else if (hour == 15 || hour == 16) return 22; //15:30–16:59	
 
-            else if (hour == 17) return 16;
+            else if (hour == 17) return 16; //17:00–17:59	
 
-            else if (hour == 18 && minute <= 29) return 9;
+            else if (hour == 18 && minute <= 29) return 9; //18:00–18:29	
 
-            else return 0;
+            else return 0; //18:30–05:59	
         }
 
 

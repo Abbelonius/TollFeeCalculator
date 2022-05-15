@@ -17,4 +17,5 @@ Vidare har jag antagit att man inte skickar några nullvärden till parametrarna
      På det sättet är det även lätt för någon(kanske en IT-tekniker) att modifiera filen vid behov utan att blanda in en utvecklare. 
 
 Jag hoppas att lösningen är fullgod och diskuterar gärna varför jag har gjort som jag gjort och vad som kan förbättras ytterligare här på GitHub, mail eller telefon. 
+
 /A

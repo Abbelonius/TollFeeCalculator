@@ -13,27 +13,28 @@ namespace TollFeeCalculator
          * @return - the total toll fee for that day
          */
 
-        public static int GetTollFee(IVehicle vehicle, DateTime[] dates)
+        public static int GetDailyTollFee(IVehicle vehicle, DateTime[] passages)
         {
-            DateTime intervalStart = dates[0];
+            DateTime intervalStart = passages[0];
+            int tempFee = GetPassageCost(vehicle, intervalStart);
             int totalFee = 0;
-            foreach (DateTime date in dates)
+            
+            foreach (DateTime passage in passages)
             {
-                int nextFee = GetPassageCost(vehicle, date);
-                int tempFee = GetPassageCost(vehicle, intervalStart);
+                int nextFee = GetPassageCost(vehicle, passage);
 
-                long diffInMillies = date.Millisecond - intervalStart.Millisecond;
-                long minutes = diffInMillies / 1000 / 60;
+                double minutes = (passage - intervalStart).TotalMinutes; //Get total minutes of a timespan
 
-                if (minutes <= 60)
+                if (minutes > 0 && minutes <= 60)
                 {
-                    if (totalFee > 0) totalFee -= tempFee;
-                    if (nextFee >= tempFee) tempFee = nextFee;
-                    totalFee += tempFee;
+                    totalFee -= tempFee; //Removes last added value in case there's a higher within the 1 hour interval
+                    totalFee += tempFee = Math.Max(tempFee, nextFee); //Adds highest value in interval to total
                 }
                 else
                 {
-                    totalFee += nextFee;
+                    intervalStart = passage; //Set up new 1 hour interval
+                    tempFee = nextFee; //Set up min cost for new interval
+                    totalFee += nextFee; //Add to total
                 }
             }
             if (totalFee > 60) totalFee = 60;

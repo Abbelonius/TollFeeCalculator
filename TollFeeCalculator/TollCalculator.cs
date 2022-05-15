@@ -1,4 +1,5 @@
 ﻿using PublicHoliday;
+using TollFeeCalculator.Vehicles;
 
 namespace TollFeeCalculator
 {
@@ -78,10 +79,24 @@ namespace TollFeeCalculator
 
 
 
+        /**
+         * Checks if vehicle doesn't need to pay toll
+         *
+         * @param vehicle - the vehicle
+         * @return - True if no toll needed
+         */
+
         private static bool IsTollFreeVehicle(IVehicle vehicle) => vehicle.IsTollFree;
 
-        
-        
+
+
+
+        /**
+         * Checks if it is a toll free day using third party package
+         *
+         * @param dates - date and time of the pass
+         * @return - True if  no toll is needed
+         */
         private static readonly SwedenPublicHoliday holidayCalendar = new SwedenPublicHoliday();
         private static Boolean IsTollFreeDate(DateTime date)
         {

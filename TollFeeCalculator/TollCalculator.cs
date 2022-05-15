@@ -6,24 +6,24 @@ namespace TollFeeCalculator
     {
 
         /**
-         * Calculate the total toll fee for one day
+         * Calculate the total toll fee for one day for a certain vehicle
          *
          * @param vehicle - the vehicle
-         * @param dates   - date and time of all passes on one day
+         * @param dates - date and time of all passes on one day
          * @return - the total toll fee for that day
          */
 
-        public static int GetDailyTollFee(IVehicle vehicle, DateTime[] passages)
+        public static int GetDailyTollFee(IVehicle vehicle, DateTime[] passes)
         {
-            DateTime intervalStart = passages[0];
+            DateTime intervalStart = passes[0];
             int tempFee = GetPassageCost(vehicle, intervalStart);
             int totalFee = 0;
             
-            foreach (DateTime passage in passages)
+            foreach (DateTime pass in passes)
             {
-                int nextFee = GetPassageCost(vehicle, passage);
+                int nextFee = GetPassageCost(vehicle, pass);
 
-                double minutes = (passage - intervalStart).TotalMinutes; //Get total minutes of a timespan
+                double minutes = (pass - intervalStart).TotalMinutes; //Get total minutes of a timespan
 
                 if (minutes > 0 && minutes <= 60)
                 {
@@ -32,7 +32,7 @@ namespace TollFeeCalculator
                 }
                 else
                 {
-                    intervalStart = passage; //Set up new 1 hour interval
+                    intervalStart = pass; //Set up new 1 hour interval
                     tempFee = nextFee; //Set up min cost for new interval
                     totalFee += nextFee; //Add to total
                 }
@@ -41,6 +41,15 @@ namespace TollFeeCalculator
             return totalFee;
         }
 
+
+
+        /**
+         * Calculate the toll fee for one pass for a certain vehicle
+         *
+         * @param vehicle - the vehicle
+         * @param dates - date and time of the pass
+         * @return - the toll fee for that pass
+         */
 
         public static int GetPassageCost(IVehicle vehicle, DateTime date)
         {
